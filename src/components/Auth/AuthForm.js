@@ -16,12 +16,42 @@ const AuthForm = () => {
     event.preventDefault();
     const enteredEmail=emailInputRef.current.value;
     const enteredPassword=passwordInputRef.current.value;
-    
+    statusHandler(true);
     if(isLogin)
     {
+      fetch("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDN4iNjO2zbFUxmYwSwoXCk68cOxrExcKE",
+      {
+        method:'POST',
+        body:JSON.stringify({
+          email:enteredEmail,
+          password:enteredPassword,
+          returnSecureToken:true
+        }),
+        headers:{
+          'Content-Type':'application/json'
+        }
+
+      }).then(res=>{
+        statusHandler(false)
+        
+        if(res.ok)
+        {
+          return res.json().then(data=>{
+            console.log(data.idToken);
+          })
+        }
+        else{
+          return res.json().then(data=>{
+           alert(data.error.message)
+          });
+        }
+      })
+
+
+
 
     }else{
-      statusHandler(true);
+      
       fetch("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDN4iNjO2zbFUxmYwSwoXCk68cOxrExcKE",
       {
         method:'POST',
