@@ -1,4 +1,4 @@
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route,Redirect } from 'react-router-dom';
 import React,{useContext, useState} from 'react';
 
 import Layout from './components/Layout/Layout';
@@ -9,8 +9,8 @@ import TokenProvider from './store/TokenProvider';
 import TokenContext from './store/TokenContext';
 
 function App() {
-  const ctx=useContext(TokenContext);
-  const login=ctx.isLoggedIn;
+  const authctx=useContext(TokenContext);
+  const login=authctx.isLoggedIn;
  
 
 
@@ -20,11 +20,14 @@ function App() {
     <Route path='/' exact>
       <HomePage />
       </Route>
-   <Route path='/auth'>
+   {!authctx.isLoggedIn && <Route path='/auth'>
       <AuthPage />
-    </Route>
-    <Route path='/profile'>
+    </Route>}
+   {authctx.isLoggedIn && <Route path='/profile'>
   <UserProfile />
+    </Route>}
+    <Route path='*'>
+      <Redirect to='/' />
     </Route>
   </Switch>
 </Layout>
