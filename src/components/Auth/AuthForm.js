@@ -1,7 +1,8 @@
 import { useState ,useRef,useContext } from 'react';
 import TokenContext from '../../store/TokenContext';
 import classes from './AuthForm.module.css';
-
+import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 const AuthForm = () => {
 
   const [sentrequest,statusHandler]=useState(false);
@@ -9,7 +10,7 @@ const AuthForm = () => {
   const passwordInputRef=useRef();
   const [isLogin, setIsLogin] = useState(true);
   const authctx=useContext(TokenContext);
-
+ const history=useHistory();
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
   };
@@ -40,6 +41,7 @@ const AuthForm = () => {
         {
           return res.json().then(data=>{
             authctx.login(data.idToken)
+            history.replace('/profile')
           })
         }
         else{

@@ -51,8 +51,6 @@ const MainNavigation = () => {
 
 return (
    <>{content}
-   {isLoggedIn && <h1>IN</h1>}
-   {!isLoggedIn &&<h1>OUT</h1>}
    </>
 
   );
