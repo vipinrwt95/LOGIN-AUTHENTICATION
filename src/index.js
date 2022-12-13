@@ -3,10 +3,14 @@ import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
 import App from './App';
+import { TokenProvider } from './store/TokenContext';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <TokenProvider>
   <BrowserRouter>
     <App />
   </BrowserRouter>
+  </TokenProvider>
 );
